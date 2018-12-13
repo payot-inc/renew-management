@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
 
 Vue.use(Router);
 
@@ -10,16 +9,31 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      name: 'root',
+      component: require('@/components/layout/layout').default,
+      redirect: '/calendar',
+      children: [
+        {
+          name: 'calendar',
+          path: '/calendar',
+          component: require('@/views/calendar').default,
+        },
+        {
+          name: 'machine-list',
+          path: '/machine-list',
+          component: require('@/views/calendar').default,
+        },
+        {
+          name: 'machine-add',
+          path: '/machine-add',
+          component: require('@/views/machine-add').default,
+        },
+      ],
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      path: '/calendar',
+      name: 'calendar',
+      component: require('@/views/calendar.vue').default,
     },
   ],
 });

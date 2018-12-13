@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+/* 초기화 */
+html {}
+body {margin:0;padding:0;font-size:12px;font-family:'gulim', 'dotum', sans-serif;background:#fff}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0;font-smoothing: antialiased;}
+h1, h2, h3, h4, h5, h6 {font-family:'Noto Sans KR', dotum, sans-serif;font-weight:normal;color:#494949;margin:0px;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+
+ul, dl,dt,dd {margin:0;padding:0;list-style:none}
+legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+label, input, button, select, img {}
+input, {margin:0;padding:0;font-family:'gulim', dotum, sans-serif;}
+button {margin:0;padding:0;font-family:'Noto Sans KR', dotum, sans-serif;}
+input[type="submit"]{cursor:pointer}
+button[type='submit'] {cursor:pointer;outline: none}
+
+a.btn{font-family:'Noto Sans KR', dotum, sans-serif;}
+
+table{width:100%;border-spacing:0px;padding:0px;border:0px;}
+th, td{padding:0px;}
