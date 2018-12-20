@@ -9,6 +9,8 @@
         <div class="sub_page_title">
           <h2>{{ title }}</h2>
         </div>
+
+        <router-view></router-view>
       </div>
     </div>
   </div>
@@ -23,7 +25,7 @@ export default {
   components: {
     HeaderComponent,
     NaviComponent,
-    TopNaviComponent
+    TopNaviComponent,
   },
   computed: {
     title() {
@@ -31,7 +33,7 @@ export default {
     },
     navigationPath() {
       return ['HOME', '장비관리', '장비목록'];
-    }
-  }
+    },
+  },
 };
 </script>

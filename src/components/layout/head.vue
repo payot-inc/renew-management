@@ -8,7 +8,7 @@
       </div>
       <div class="gnb">
         <p>
-          <strong>{{ company }}</strong>점주님 안녕하세요
+          <strong>{{ company.owner.name }}</strong>점주님 안녕하세요
         </p>
         <a class="logout">로그아웃</a>
       </div>
@@ -17,11 +17,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['company'])
-  }
+    ...mapState(['company']),
+  },
+
+  methods: {
+    ...mapMutations(['logout']),
+    setLogout() {},
+  },
 };
 </script>

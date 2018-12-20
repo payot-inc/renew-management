@@ -12,13 +12,13 @@
         <dd>
           <ul>
             <li>
-              <a>장비목록</a>
+              <router-link to="/machine-list">장비목록</router-link>
             </li>
+            <!-- <li>
+              <router-link to="/machine-add">장비등록</router-link>
+            </li>-->
             <li>
-              <a>장비등록</a>
-            </li>
-            <li>
-              <a>장비원격제어</a>
+              <router-link to="/machine-control">장비원격제어</router-link>
             </li>
           </ul>
         </dd>
@@ -28,7 +28,7 @@
         <dd>
           <ul>
             <li>
-              <a>장비별 상품관리</a>
+              <router-link to="/machine-service">장비별 상품관리</router-link>
             </li>
           </ul>
         </dd>
@@ -38,22 +38,22 @@
         <dd>
           <ul>
             <li>
-              <a>월 매출현황</a>
+              <router-link to="/calendar">월 매출현황</router-link>
             </li>
             <li>
-              <a>실시간 매출현황</a>
+              <router-link to="/sales-list">실시간 매출현황</router-link>
             </li>
             <li>
-              <a>기간별 매출통계</a>
+              <router-link to="/sales-range-graph">기간별 매출 그래프</router-link>
             </li>
             <li>
-              <a>장비별 매출통계</a>
+              <router-link to="/sales-machine">장비별 매출통계</router-link>
             </li>
             <li>
-              <a>비용사용 현황</a>
+              <router-link to="/management-list">비용사용 현황</router-link>
             </li>
             <li>
-              <a>비용등록</a>
+              <router-link to="/management-add">비용등록</router-link>
             </li>
           </ul>
         </dd>
@@ -63,22 +63,22 @@
         <dd>
           <ul>
             <li>
-              <a>회원리스트</a>
+              <router-link to="/user-list">회원 목록</router-link>
             </li>
             <li>
-              <a>SMS 문자전송</a>
+              <router-link to="/user-sms">SMS 문자전송</router-link>
             </li>
             <li>
-              <a>SMS 사용현황</a>
+              <router-link to="/user-sms-list">SMS 전송내역</router-link>
             </li>
             <li>
-              <a>포인트 적립</a>
+              <router-link to="/user-point-add">포인트 적립</router-link>
             </li>
             <li>
-              <a>포인트 사용현황</a>
+              <router-link to="/user-point-add-list">포인트 적립내역</router-link>
             </li>
             <li>
-              <a>포인트 지급현황</a>
+              <router-link to="/user-point-use">포인트 사용현황</router-link>
             </li>
           </ul>
         </dd>

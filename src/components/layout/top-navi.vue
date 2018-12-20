@@ -15,6 +15,6 @@
 
 <script>
 export default {
-  props: ['navi']
+  props: ['navi'],
 };
 </script>

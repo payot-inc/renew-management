@@ -1,5 +1,7 @@
 export default {
-  company: {},
+  company: {
+    id: 10,
+  },
   machines: [],
   users: [],
 };
