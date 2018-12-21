@@ -2,8 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
 
-const HOST = 'http://localhost:3000';
-// const HOST = 'http://api.payot-coin.com';
+const HOST = 'http://api.payot-coin.com';
 
 export default {
   // 업체 로그인 하기
