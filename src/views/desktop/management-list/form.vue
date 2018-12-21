@@ -6,7 +6,6 @@
         <tbody>
           <tr>
             <td class="t1">월 선택</td>
-
             <td class="t2" colspan="5">
               <sui-dropdown :options="months" search selection v-model="targetDate" placeholder="월"></sui-dropdown>
             </td>
