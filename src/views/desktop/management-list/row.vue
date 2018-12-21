@@ -34,10 +34,23 @@
         <sui-button @click="modal.show = false">닫기</sui-button>
       </sui-modal-actions>
     </sui-modal>
+
+    <sui-modal v-model="modal.success.show">
+      <sui-modal-header>변경 완료</sui-modal-header>
+
+      <sui-modal-content>{{ this.input.targetDate | moment('YYYY년 MM월') }} 의 내용이 정상적으로 변경되었습니다</sui-modal-content>
+
+      <sui-modal-actions>
+        <sui-button>확인</sui-button>
+        <sui-button @click="modal.success.show = false">닫기</sui-button>
+      </sui-modal-actions>
+    </sui-modal>
   </tr>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   props: ['data'],
   data() {
@@ -45,6 +58,9 @@ export default {
       input: this.data,
       modal: {
         show: false,
+        success: {
+          show: false,
+        },
       },
     };
   },
@@ -60,8 +76,19 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateManagement']),
     setUpdate() {
-      console.log(this.input);
+      const self = this;
+      self.modal.show = false;
+      // eslint-disable-next-line no-shadow
+      this.updateManagement(this.input)
+        .then(() => {
+          self.$emit('update:row');
+          self.modal.success.show = true;
+        })
+        .then((err) => {
+          console.log(err.response.body);
+        });
     },
   },
   filters: {

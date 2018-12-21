@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import store from './store/index';
+import { isEmpty } from 'lodash';
 import Router from 'vue-router';
 import { isMobile } from 'mobile-device-detect';
 
@@ -8,6 +10,7 @@ import Calendar from '@/views/desktop/calendar/index.vue';
 import MachineList from '@/views/desktop/machine-list/index.vue';
 // import MachineAdd from '@/views/desktop/machine-add/index.vue';
 import MachineControl from '@/views/desktop/machine-control/index.vue';
+import MachineControlList from '@/views/desktop/machine-control-list/index.vue';
 import MachineService from '@/views/desktop/machine-service/index.vue';
 import SalesList from '@/views/desktop/sales-list/index.vue';
 import SalesRangeGraph from '@/views/desktop/sales-range-graph/index.vue';
@@ -22,17 +25,11 @@ import UserPointAdd from '@/views/desktop/user-point-add/index.vue';
 import UserPointAddList from '@/views/desktop/user-point-add-list/index.vue';
 
 function requireAuth(to, from, next) {
-  return '';
-}
+  if (isEmpty(store.state.company)) return next('login');
 
-function checkMobile(to, from, next) {
-  if (isMobile) {
-    console.log('모바일 입니다');
-  } else {
-    console.log('데스크탑 입니다', to, from);
-  }
+  if (!isMobile) return next();
 
-  next();
+  return next(`/m/${from.path}`);
 }
 
 Vue.use(Router);
@@ -52,7 +49,7 @@ export default new Router({
       name: 'root',
       component: Layout,
       redirect: 'machine-list',
-      beforeEnter: checkMobile,
+      beforeEnter: requireAuth,
       children: [
         {
           name: 'calendar',
@@ -64,15 +61,15 @@ export default new Router({
           path: '/machine-list',
           component: MachineList,
         },
-        // {
-        //   name: 'machine-add',
-        //   path: '/machine-add',
-        //   component: MachineAdd,
-        // },
         {
           name: 'machine-control',
           path: '/machine-control',
           component: MachineControl,
+        },
+        {
+          name: 'machine-control-list',
+          path: '/machine-control-list',
+          component: MachineControlList,
         },
         {
           name: 'machine-service',

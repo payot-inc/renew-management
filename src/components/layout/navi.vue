@@ -8,32 +8,6 @@
     </div>
     <div class="menu">
       <dl>
-        <dt>장비관리</dt>
-        <dd>
-          <ul>
-            <li>
-              <router-link to="/machine-list">장비목록</router-link>
-            </li>
-            <!-- <li>
-              <router-link to="/machine-add">장비등록</router-link>
-            </li>-->
-            <li>
-              <router-link to="/machine-control">장비원격제어</router-link>
-            </li>
-          </ul>
-        </dd>
-      </dl>
-      <dl>
-        <dt>상품관리</dt>
-        <dd>
-          <ul>
-            <li>
-              <router-link to="/machine-service">장비별 상품관리</router-link>
-            </li>
-          </ul>
-        </dd>
-      </dl>
-      <dl>
         <dt>매출·비용관리</dt>
         <dd>
           <ul>
@@ -52,8 +26,31 @@
             <li>
               <router-link to="/management-list">비용사용 현황</router-link>
             </li>
+          </ul>
+        </dd>
+      </dl>
+      <dl>
+        <dt>장비관리</dt>
+        <dd>
+          <ul>
             <li>
-              <router-link to="/management-add">비용등록</router-link>
+              <router-link to="/machine-list">장비목록</router-link>
+            </li>
+            <li>
+              <router-link to="/machine-control">장비원격제어</router-link>
+            </li>
+            <li>
+              <router-link to="/machine-control-list">장비원격제어 목록</router-link>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+      <dl>
+        <dt>상품관리</dt>
+        <dd>
+          <ul>
+            <li>
+              <router-link to="/machine-service">장비별 상품관리</router-link>
             </li>
           </ul>
         </dd>
@@ -66,19 +63,16 @@
               <router-link to="/user-list">회원 목록</router-link>
             </li>
             <li>
-              <router-link to="/user-sms">SMS 문자전송</router-link>
-            </li>
-            <li>
-              <router-link to="/user-sms-list">SMS 전송내역</router-link>
-            </li>
-            <li>
               <router-link to="/user-point-add">포인트 적립</router-link>
             </li>
             <li>
               <router-link to="/user-point-add-list">포인트 적립내역</router-link>
             </li>
             <li>
-              <router-link to="/user-point-use">포인트 사용현황</router-link>
+              <router-link to="/user-sms">SMS 문자전송</router-link>
+            </li>
+            <li>
+              <router-link to="/user-sms-list">SMS 전송내역</router-link>
             </li>
           </ul>
         </dd>
@@ -86,3 +80,13 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  computed: {
+    ...mapState(['routePath']),
+  },
+};
+</script>

@@ -2,7 +2,7 @@
   <li class="column">
     <dl>
       <dt>
-        <strong>2</strong>
+        <strong>{{ index + 1}}</strong>
         <!-- <sui-button @click="$emmit('update:selected', machine)">
           <i class="ui cog icon"></i>
         </sui-button>-->
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  props: ['machine'],
+  props: ['index', 'machine'],
   methods: {
     showDialog() {
       this.$emit('update:selected', this.machine);

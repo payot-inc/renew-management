@@ -1,7 +1,7 @@
 <template>
   <div class="user_wr contents">
-    <info/>
-    <form-component/>
+    <info @update:users="users = $event"/>
+    <form-component :count="users.length" :phones="phones"/>
   </div>
 </template>
 
@@ -13,6 +13,16 @@ export default {
   components: {
     info,
     FormComponent,
+  },
+  data() {
+    return {
+      users: [],
+    };
+  },
+  computed: {
+    phones() {
+      return this.users.map(i => i.phone);
+    },
   },
 };
 </script>

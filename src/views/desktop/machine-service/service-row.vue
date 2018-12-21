@@ -2,7 +2,7 @@
   <tr>
     <td>{{ number }}</td>
     <td>
-      <sui-input v-model="input.name" type="text"/>
+      <sui-input style="width: 100%;" v-model="input.name" type="text"/>
     </td>
     <td>
       <sui-input v-model.number="input.runTimeSec" type="number" placeholder="동작시간(초)"/>
@@ -13,7 +13,7 @@
     <td>-</td>
     <td>
       <sui-button @click="modal.update.show = true">수정</sui-button>
-      <sui-button @click="modal.delete.show = true">삭제</sui-button>
+      <sui-button @click="modal.delete.show = true" negative>삭제</sui-button>
     </td>
 
     <sui-modal size="mini" v-model="modal.delete.show">

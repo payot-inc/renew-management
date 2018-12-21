@@ -56,6 +56,16 @@
         <sui-button @click="setManagement()">비용입력 완료</sui-button>
       </div>
     </dd>
+
+    <sui-modal v-model="modal.error.show" size="mini">
+      <sui-modal-header>{{ modal.error.title }}</sui-modal-header>
+
+      <sui-modal-content>{{ modal.error.message }}</sui-modal-content>
+
+      <sui-modal-actions>
+        <sui-button @click="modal.error.show = false">닫기</sui-button>
+      </sui-modal-actions>
+    </sui-modal>
   </dl>
 </template>
 
@@ -75,6 +85,13 @@ export default {
       etc: 0,
       spaceRant: 0,
       targetDate: moment().format('YYYY-MM-DD'),
+      modal: {
+        error: {
+          show: false,
+          title: '',
+          message: '',
+        },
+      },
     };
   },
   mounted() {
@@ -101,14 +118,36 @@ export default {
       return this.water + this.electric + this.gas + this.etc + this.spaceRant;
     },
   },
+  watch: {
+    // eslint-disable-next-line func-names
+    'modal.error.show': function (newValue) {
+      if (newValue) return;
+
+      this.modal.error.message = '';
+      this.modal.error.title = '';
+    },
+  },
   methods: {
     ...mapActions(['appendManagementData']),
 
     setManagement() {
       const self = this;
-      this.appendManagementData({ input: this.input }).then(data => {
-        self.$emit('update:insert', data);
-      });
+      this.appendManagementData({ input: this.input })
+        .then((data) => {
+          self.$emit('update:insert', data);
+        })
+        .catch((err) => {
+          const code = err.response.status;
+          if (code === 500) {
+            self.modal.error.title = '중복된 내용';
+            self.modal.error.message =              '이미 입력된 내용입니다 아래 내용에 수정해 주세요';
+          } else {
+            self.modal.error.title = '날짜 선택';
+            self.modal.error.message = '날짜를 선택해 주세요';
+          }
+
+          self.modal.error.show = true;
+        });
     },
   },
 };

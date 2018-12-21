@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import moment from 'moment';
 import { mapActions } from 'vuex';
 
@@ -93,17 +92,19 @@ export default {
 
     gettingData() {
       const self = this;
-      this.smsList().then((data) => {
+      this.smsList().then(data => {
+        self.$emit('update:list', data);
         self.list = data;
       });
 
-      this.usersData().then((data) => {
+      this.usersData().then(data => {
+        self.$emit('update:users', data);
         self.users = data;
       });
     },
 
     filterList(month, sender) {
-      const filterList = this.list.filter((i) => {
+      const filterList = this.list.filter(i => {
         const lastMonth = moment()
           .add(month, 'month')
           .month();

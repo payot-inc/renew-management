@@ -5,7 +5,7 @@
     <td>{{ machine.type }}</td>
     <td>{{ totalRunning }}</td>
     <td>{{ dayAverage | convertPrice }}원</td>
-    <td>{{ dayAverage * 30 | convertPrice }}원</td>
+    <td>{{ total | convertPrice }}원</td>
   </tr>
 </template>
 
@@ -27,19 +27,12 @@ export default {
     },
 
     totalDay() {
-      if (this.sales.length === 0) return 0;
+      if (this.sales.length === 0) return 1;
       const start = this.minDay;
       const end = this.maxDay;
+      const result = moment(end).diff(moment(start), 'day');
 
-      return moment(end).diff(moment(start), 'day');
-    },
-
-    totalMonth() {
-      if (this.sales.length === 0) return 0;
-      const start = this.minDay;
-      const end = this.maxDay;
-
-      return moment(end).diff(moment(start), 'month');
+      return result <= 0 ? 1 : result;
     },
 
     totalSales() {
@@ -59,7 +52,12 @@ export default {
 
     dayAverage() {
       if (this.sales.length === 0) return 0;
-      return Math.floor(this.totalSales / this.totalDay);
+      return Math.ceil(this.totalSales / this.totalDay);
+    },
+
+    total() {
+      if (this.sales.length === 0) return 0;
+      return _.sumBy(this.sales, i => Number(i.amount));
     },
   },
   filters: {

@@ -3,7 +3,7 @@
     <div class="eq_product">
       <div class="eq_pd_list">
         <ul>
-          <row v-for="m in machines" :key="m.id" :machine="m"/>
+          <row v-for="(m, index) in machines" :key="m.id" :machine="m" :index="index"/>
         </ul>
       </div>
     </div>

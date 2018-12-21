@@ -1,14 +1,14 @@
 <template>
   <li>
-    <sui-accordion class="menu fluid" exclusive>
-      <sui-accordion-title>
+    <sui-accordion fluid styled exclusive>
+      <sui-accordion-title :active="index === 0">
         <i class="dropdown icon"></i>
         <strong class="num">01</strong>
         <strong class="name">{{ machine.name }}</strong>
         <span>타입: {{ machine.type }} | 용량 {{ machine.size }}</span>
       </sui-accordion-title>
 
-      <sui-accordion-content>
+      <sui-accordion-content :active="index === 0">
         <table class="h_table">
           <thead>
             <tr>
@@ -34,7 +34,7 @@
         </table>
 
         <div class="t_bottom">
-          <sui-button @click="addDialog()" class="pd_popup_on">상품등록</sui-button>
+          <sui-button @click="addDialog()" class="pd_popup_on" primary>상품등록</sui-button>
         </div>
       </sui-accordion-content>
     </sui-accordion>
@@ -48,7 +48,7 @@ import ServiceRow from './service-row.vue';
 import Alert from './alert.vue';
 
 export default {
-  props: ['machine'],
+  props: ['machine', 'index'],
   components: {
     ServiceRow,
     Alert,

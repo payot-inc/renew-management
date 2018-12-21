@@ -7,8 +7,8 @@
         <td class="t3">용량</td>
         <td class="t4">도입시기</td>
         <td class="t5">MAC주소</td>
-        <td class="t6">상태</td>
-        <td class="t7">동작</td>
+        <!-- <td class="t6">상태</td>
+        <td class="t7">동작</td>-->
       </tr>
     </thead>
     <tbody>

@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export default {
   // 업체정보 바인딩
   setCompany(state, data) {

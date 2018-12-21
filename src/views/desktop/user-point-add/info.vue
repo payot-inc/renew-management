@@ -3,17 +3,9 @@
     <ul class="ui column grid">
       <li class="two wide column">
         <dl class="blue">
-          <dt>지난달 사용한 포인트</dt>
+          <dt>고객 총 보유 포인트</dt>
           <dd>
-            <strong>50,500</strong>포인트
-          </dd>
-        </dl>
-      </li>
-      <li class="two wide column">
-        <dl class="blue">
-          <dt>이번달 사용한 포인트</dt>
-          <dd>
-            <strong>24,850</strong>포인트
+            <strong>{{ totalPoint.toLocaleString() }}</strong>포인트
           </dd>
         </dl>
       </li>
@@ -21,7 +13,7 @@
         <dl class="red">
           <dt>매장 회원 수</dt>
           <dd>
-            <strong>92</strong>명
+            <strong>{{ data.users.length.toLocaleString() }}</strong>명
           </dd>
         </dl>
       </li>
@@ -30,13 +22,35 @@
 </template>
 
 <script>
-import info from './info.vue';
-import DataForm from './form.vue';
+import { mapActions } from 'vuex';
 
 export default {
-  components: {
-    info,
-    DataForm,
+  data() {
+    return {
+      data: {
+        users: [],
+        points: [],
+      },
+    };
+  },
+  mounted() {
+    this.gettingData();
+  },
+  computed: {
+    totalPoint() {
+      return this.data.users.reduce((acc, v) => acc + Number(v.point), 0);
+    },
+  },
+  methods: {
+    ...mapActions(['usersData']),
+
+    gettingData() {
+      const self = this;
+      this.usersData().then((data) => {
+        self.data.users = data;
+        self.$emit('update:users', data);
+      });
+    },
   },
 };
 </script>

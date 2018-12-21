@@ -44,8 +44,11 @@ export default {
       const result = [];
       result.push(title);
 
-      _.times(moment(this.date).daysInMonth(), (i) => {
-        if (!group[`${i + 1}`]) return [`${i + 1}일`, 0];
+      _.times(moment(this.date).daysInMonth(), i => {
+        if (!group[`${i + 1}`]) {
+          result.push([`${i + 1}일`, 0]);
+          return true;
+        }
         result.push([
           `${i + 1}일`,
           _.sumBy(group[`${i + 1}`], p => Number(p.amount)),
@@ -72,9 +75,10 @@ export default {
         .toDate();
       const end = moment(this.date)
         .endOf('month')
+        .add(1, 'day')
         .toDate();
 
-      this.salesData({ start, end }).then((data) => {
+      this.salesData({ start, end }).then(data => {
         self.data = data;
       });
     },

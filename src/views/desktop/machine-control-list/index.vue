@@ -1,15 +1,14 @@
 <template>
   <div class="sales_wr contents">
     <div class="real_time_list">
-      <search-box
+      <query-form
         :start="query.start"
         :end="query.end"
         @update:start="query.start = $event"
         @update:end="query.end = $event"
-        @update:machine="query.machine = $event"
         @update:search="console.log($event)"
       />
-      <sales-table :page="query.page" :totalCount="filterList.length" :list="list"/>
+      <data-table :page="query.page" :totalCount="data.length" :list="data"/>
 
       <div class="bottom_btns">
         <div class="paging_wr">
@@ -31,82 +30,63 @@
     <!-- cost_list -->
   </div>
 </template>
+
 <script>
-import moment from 'moment';
 import { mapActions } from 'vuex';
-import SearchBox from './query.vue';
-import SalesTable from './table.vue';
+import moment from 'moment';
+import { sortBy } from 'lodash';
+import QueryForm from './query.vue';
+import DataTable from './table.vue';
 
 export default {
   components: {
-    SearchBox,
-    SalesTable,
+    QueryForm,
+    DataTable,
   },
   data() {
     return {
+      data: [],
       query: {
         start: new Date(),
         end: new Date(),
         page: 1,
-        machine: '',
       },
-      data: [],
     };
   },
   mounted() {
     this.gettingData();
   },
-  watch: {
-    // eslint-disable-next-line func-names
-    'query.start': function (newValue) {
-      if (moment(newValue) <= moment(this.query.end)) {
-        this.gettingData();
-      }
-    },
-    // eslint-disable-next-line func-names
-    'query.end': function (newValue) {
-      if (moment(newValue) >= moment(this.query.start)) {
-        this.gettingData();
-      }
+  computed: {
+    pageCount() {
+      return Math.ceil(this.data.length / 20);
     },
   },
-  computed: {
-    list() {
-      return this.filterList.slice(
-        (this.query.page - 1) * 20,
-        this.query.page * 20,
-      );
-    },
-    pageCount() {
-      return Math.ceil(this.filterList.length / 20);
+  watch: {
+    // eslint-disable-next-line func-names
+    'query.start': function(newValue) {
+      if (moment(newValue) < moment(this.query.end)) {
+        this.gettingData();
+      }
     },
 
-    filterList() {
-      const machineId = this.query.machine;
-      return this.data.filter((v) => {
-        if (machineId === '') return true;
-
-        return machineId === v.mac;
-      });
+    // eslint-disable-next-line func-names
+    'query.end': function(newValue) {
+      if (moment(newValue) > moment(this.query.start)) {
+        this.gettingData();
+      }
     },
   },
   methods: {
-    ...mapActions(['salesData']),
+    ...mapActions(['claimList']),
 
     gettingData() {
       const self = this;
-      const start = moment(this.query.start)
-        .add(-1, 'day')
-        .toDate();
-      const end = moment(this.query.end)
-        .add(1, 'day')
-        .toDate();
-      const query = { start, end };
-      this.data = [];
 
-      this.salesData(query).then((data) => {
-        self.data = data;
-      });
+      this.claimList({ start: this.query.start, end: this.query.end }).then(
+        data => {
+          self.data = sortBy(data, i => i.createdAt).reverse();
+        }
+      );
     },
   },
 };

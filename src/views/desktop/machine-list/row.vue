@@ -5,13 +5,13 @@
     <td class="t3">{{ machine.size }}</td>
     <td class="t4">{{ machine.installAt | convertDate }}</td>
     <td class="t5">{{ machine.mac }}</td>
-    <td class="t6">서비스가능</td>
+    <!-- <td class="t6">서비스가능</td>
     <td class="t7">
       <div class="ui toggle checkbox">
         <input readonly="readonly" tabindex="0" type="checkbox" class="hidden">
         <label></label>
       </div>
-    </td>
+    </td>-->
   </tr>
 </template>
 

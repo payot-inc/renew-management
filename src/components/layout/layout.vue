@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import HeaderComponent from './head.vue';
 import NaviComponent from './navi.vue';
 import TopNaviComponent from './top-navi.vue';
@@ -28,11 +29,13 @@ export default {
     TopNaviComponent,
   },
   computed: {
+    ...mapState(['routePath']),
+
     title() {
-      return this.$route.name;
+      return this.routePath[this.$route.path].label;
     },
     navigationPath() {
-      return ['HOME', '장비관리', '장비목록'];
+      return this.routePath[this.$route.path].path;
     },
   },
 };

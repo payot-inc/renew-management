@@ -7,12 +7,12 @@
             v-for="(m, index) in machines"
             :key="index"
             :machine="m"
+            :index="index"
             @update:selected="showDialog($event)"
           />
         </ul>
       </div>
     </div>
-
     <alert :show="show" :machine="select" @update:show="show = $event"/>
   </div>
 </template>

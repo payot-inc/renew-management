@@ -2,7 +2,8 @@ import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
 
-const HOST = 'http://api.payot-coin.com';
+const HOST = 'http://localhost:3000';
+// const HOST = 'http://api.payot-coin.com';
 
 export default {
   // 업체 로그인 하기
@@ -26,11 +27,32 @@ export default {
     return axios.post(url, input).then(({ data }) => data);
   },
 
+  // 클레임 사용 내역
+  claimList({ state }, { start, end }) {
+    const id = state.company.id;
+    const startDate = moment(start).format('YYYY-MM-DD');
+    const endDate = moment(end).format('YYYY-MM-DD');
+
+    const url = `${HOST}/claim/company/${id}?start=${startDate}&end=${endDate}`;
+
+    return axios.get(url).then(({ data }) => data);
+  },
+
   // 사용자에게 문자 발송
-  sms({ state }, { phoneNumber, title, message }) {},
+  sms({ state }, { message }) {
+    const company = state.company;
+    const url = `${HOST}/sms`;
+    const input = {
+      message,
+      companyId: company.id,
+      franchiseId: company.franchise.id,
+      type: 'company',
+    };
 
-  smsBulk({ state }, { phoneNumber, title, message }) {},
+    return axios.post(url, input).then(({ data }) => data);
+  },
 
+  // 문자전송 내역 가져오기
   smsList({ state }) {
     const franchiseId = state.company.franchise.id;
     const url = `${HOST}/sms/list/franchise/${franchiseId}`;
@@ -82,6 +104,17 @@ export default {
     return axios.get(url).then(({ data }) => data);
   },
 
+  // 유지비 정보 업데이트
+  updateManagement({ state }, input) {
+    const inputData = input;
+    const id = input.id;
+    const url = `${HOST}/maintenances/${id}`;
+
+    delete inputData.id;
+
+    return axios.put(url, inputData).then(({ data }) => data);
+  },
+
   // 유지비 정보 추가
   appendManagementData({ state }, { input }) {
     const companyId = state.company.id;
@@ -99,8 +132,6 @@ export default {
     return axios.post(url, inputData).then(({ data }) => data);
   },
 
-  // 
-
   // 가입된 사용자 조회
   usersData({ state }) {
     // eslint-disable-next-line prefer-destructuring
@@ -111,7 +142,7 @@ export default {
   },
 
   // 사용자 삭제
-  deleteUser(a, { user }) {
+  deleteUser({ state }, { user }) {
     const url = `${HOST}/users/${user.id}`;
 
     return axios.delete(url).then(({ data }) => data);
@@ -136,5 +167,31 @@ export default {
     const url = `${HOST}/service/${service.id}`;
 
     return axios.delete(url).then(({ data }) => data);
+  },
+
+  // 포인트 추가
+  addPoint({ state }, { point, phones, message }) {
+    const id = state.company.id;
+    const url = `${HOST}/point/add/company/${id}`;
+
+    return axios
+      .post(url, {
+        point,
+        manyPerson: phones.length,
+        users: phones,
+        notice: message,
+      })
+      .then(({ data }) => data);
+  },
+
+  // 적립 내역 가져오기
+  addPointList({ state }, { start, end }) {
+    const id = state.company.id;
+    const startDate = moment(start).format('YYYY-MM-DD');
+    const endDate = moment(end).format('YYYY-MM-DD');
+
+    const url = `${HOST}/point/add/list/company/${id}?start=${startDate}&end=${endDate}`;
+
+    return axios.get(url).then(({ data }) => data);
   },
 };

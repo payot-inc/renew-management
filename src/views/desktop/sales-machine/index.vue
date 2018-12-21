@@ -7,15 +7,20 @@
             <tr class="date">
               <td class="t1">기간 검색</td>
               <td class="t2">
-                <date-picker :language="datepicker.language" :format="`yyyy-MM-dd`"/>
-                <date-picker :language="datepicker.language" :format="`yyyy-MM-dd`"/>
+                <date-picker
+                  v-model="date.start"
+                  :language="datepicker.language"
+                  :format="`yyyy-MM-dd`"
+                />
+                <date-picker
+                  v-model="date.end"
+                  :language="datepicker.language"
+                  :format="`yyyy-MM-dd`"
+                />
               </td>
             </tr>
           </tbody>
         </table>
-        <div class="t_bottom">
-          <a href="#">검색</a>
-        </div>
       </div>
 
       <div class="eq_sales_list">
@@ -27,7 +32,7 @@
               <td class="w_3x">유형</td>
               <td class="w_3x">총 작동시간</td>
               <td class="w_4x">일 평균매출</td>
-              <td class="w_4x">월 평균매출</td>
+              <td class="w_4x">누적매출</td>
             </tr>
           </thead>
           <tbody>
@@ -66,21 +71,30 @@ export default {
       datepicker: {
         language: ko,
       },
+      date: {
+        start: new Date(),
+        end: new Date(),
+      },
       data: [],
     };
   },
   mounted() {
-    const self = this;
-    const startDate = moment()
-      .startOf('month')
-      .toDate();
-    const endDate = moment()
-      .endOf('month')
-      .toDate();
+    this.gettingData();
+  },
+  watch: {
+    // eslint-disable-next-line func-names
+    'date.start': function (newValue) {
+      if (moment(newValue) < moment(this.date.end)) {
+        this.gettingData();
+      }
+    },
 
-    this.salesData({ start: startDate, end: endDate }).then((data) => {
-      self.data = data;
-    });
+    // eslint-disable-next-line func-names
+    'date.end': function (newValue) {
+      if (moment(newValue) > moment(this.date.start)) {
+        this.gettingData();
+      }
+    },
   },
   computed: {
     ...mapState(['machines']),
@@ -89,6 +103,20 @@ export default {
     ...mapActions(['salesData']),
     machineSales(machine) {
       return this.data.filter(s => s.mac === machine.mac);
+    },
+
+    gettingData() {
+      const self = this;
+      const startDate = moment(this.date.start)
+        .add(-1, 'day')
+        .toDate();
+      const endDate = moment(this.date.end)
+        .add(1, 'day')
+        .toDate();
+
+      this.salesData({ start: startDate, end: endDate }).then((data) => {
+        self.data = data;
+      });
     },
   },
 };

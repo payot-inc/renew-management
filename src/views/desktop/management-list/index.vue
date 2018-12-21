@@ -34,7 +34,7 @@
           </tr>
         </thead>
         <tbody>
-          <row v-for="(m, index) in sortedData" :key="index" :data="m"/>
+          <row v-for="(m, index) in sortedData" :key="index" :data="m" @update:row="updateData()"/>
 
           <tr v-if="data.length === 0">
             <td colspan="9" class="no_item">등록된 운영비용이 없습니다</td>

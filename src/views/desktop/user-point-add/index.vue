@@ -1,7 +1,7 @@
 <template>
   <div class="user_wr contents">
-    <info/>
-    <data-form/>
+    <info @update:users="users = $event"/>
+    <data-form :users="users"/>
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   components: {
     info,
     DataForm,
+  },
+  data() {
+    return {
+      users: [],
+    };
   },
 };
 </script>

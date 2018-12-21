@@ -688,6 +688,10 @@ td.no_item {
   padding: 30px;
 }
 
+.eq_pd_list .ui.accordion title {
+  display: block;
+}
+
 .eq_pd_list ul li {
   padding-top: 10px;
 }
@@ -963,6 +967,25 @@ td.no_item {
   font-family: 'Noto Sans KR';
 }
 
+.search_box .vdp-datepicker__calendar {
+  width: 400px;
+}
+
+.search_box .vdp-datepicker__calendar header {
+  display: table;
+  width: 100%;
+}
+.search_box .vdp-datepicker__calendar header span {
+  display: table-cell;
+  width: 33.3333333334%;
+  margin: 0px;
+}
+
+.search_box .date .t2 input {
+  margin-right: 5px;
+  float: left;
+}
+
 .real_time_list table .t1 {
   width: 80px;
 }
@@ -980,13 +1003,11 @@ td.no_item {
 }
 
 .real_time_list table strong {
-  display: block;
   font-weight: 600;
   font-size: 12px;
 }
-.real_time_list table span {
-  display: block;
-  margin-top: 8px;
+.real_time_list .h_table span {
+  margin-left: 5px;
   font-size: 12px;
   color: #888;
 }
@@ -996,8 +1017,7 @@ td.no_item {
   position: relative;
   width: 100%;
 }
-.cost_list .cost_list_hd .hd_left {
-}
+
 .cost_list .cost_list_hd .hd_left a {
   display: inline-block;
   vertical-align: middle;
